@@ -11,7 +11,15 @@
 </head>
 <body>
 <div class="p-3" layout:fragment="content">
-  <div class="mb-3" sec:authorize="hasRole('ADMIN')">
+  <form class="d-flex gap-2 align-items-end" method="get" th:action="@{/user/searchProducts}">
+  <div>
+    <label for="searchProduct" class="form-label">Search Product</label>
+    <input type="text" class="form-control" id="searchProduct" name="productName"
+           th:value="${query}" placeholder="Search Product">
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+  <div class="mb-3 mt-3" sec:authorize="hasRole('ADMIN')">
     <a class="btn btn-primary" th:href="@{/admin/addProduct}">Add new product</a>
   </div>
   <table class="table">

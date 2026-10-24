@@ -49,4 +49,12 @@ public class ProductController {
         productRepository.deleteById(id);
         return "redirect:/user/index";
     }
+
+    @GetMapping("/user/searchProducts")
+    public String searchProducts(Model model, @RequestParam(name = "productName", defaultValue = "") String query) {
+        List<Product> products = productRepository.findProductByNameContainsIgnoreCase((query));
+        model.addAttribute("products", products);
+        model.addAttribute("query", query);
+        return "products";
+    }
 }
