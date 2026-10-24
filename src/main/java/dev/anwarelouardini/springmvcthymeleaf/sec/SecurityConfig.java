@@ -29,7 +29,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("1234")).roles("USER").build(),
                 User.withUsername("user2").password(passwordEncoder.encode("1234")).roles("USER").build(),
-                User.withUsername("admin").password(passwordEncoder.encode("1234")).roles("ADMIN").build()
+                User.withUsername("admin").password(passwordEncoder.encode("1234")).roles("ADMIN", "USER").build()
         );
     }
 
@@ -38,6 +38,7 @@ public class SecurityConfig {
         return http
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"))
+                .authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"))
                 .authorizeHttpRequests(ar->ar.requestMatchers("/public/**", "/webjars/**").permitAll())
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 .build();
