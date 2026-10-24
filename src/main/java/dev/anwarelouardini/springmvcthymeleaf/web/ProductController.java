@@ -2,6 +2,7 @@ package dev.anwarelouardini.springmvcthymeleaf.web;
 
 import dev.anwarelouardini.springmvcthymeleaf.entities.Product;
 import dev.anwarelouardini.springmvcthymeleaf.repositories.ProductRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,4 +66,16 @@ public class ProductController {
         model.addAttribute("product", product);
         return "new-product";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "login";
+    }
+
 }

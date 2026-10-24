@@ -36,7 +36,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .formLogin(Customizer.withDefaults())
+                .formLogin(fl -> fl.loginPage("/login").permitAll())
                 .authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"))
                 .authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"))
                 .authorizeHttpRequests(ar->ar.requestMatchers("/public/**", "/webjars/**").permitAll())
