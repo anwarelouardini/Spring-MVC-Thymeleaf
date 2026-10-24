@@ -4,6 +4,7 @@ import dev.anwarelouardini.springmvcthymeleaf.entities.Product;
 import dev.anwarelouardini.springmvcthymeleaf.repositories.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,18 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/admin/addProduct")
+    public String addProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "new-product";
+    }
 
+    @PostMapping("admin/saveProduct")
+    public String saveProduct(Product product, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {return "new-product";}
+        productRepository.save(product);
+        return "redirect:/user/index";
+    }
 
     @PostMapping("/admin/delete")
     public String deleteProduct(@RequestParam(name = "id") Long id) {
