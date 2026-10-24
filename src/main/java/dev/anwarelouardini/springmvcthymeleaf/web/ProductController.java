@@ -78,4 +78,9 @@ public class ProductController {
         return "login";
     }
 
+    @GetMapping("/notAuthorized")
+    public String notAuthorized(){
+        return "notAuthorized";
+    }
+
 }
